@@ -1,0 +1,17 @@
+@font-face {
+    font-family: 'pixl';
+    src: url('./pixl.ttf')
+}
+
+* {
+    font-family: 'pixl';
+    color: #b4a5a5;
+}
+
+body {
+    background-color: #000000;
+}
+
+canvas {
+    background-color: #201515;
+}
