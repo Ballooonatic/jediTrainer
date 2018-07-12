@@ -13,3 +13,7 @@ Un-deflected lasers that hit your handle will hurt you.
 Hold left-click to keep the rotation of your saber in place.
 
 Moving out of bounds will drain your health.
+
+## Credits
+
+Font by: [rodrigosrtz](https://www.dafont.com/i-pixel-u.font)
