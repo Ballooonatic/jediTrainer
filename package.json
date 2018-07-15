@@ -1,0 +1,24 @@
+{
+  "name": "jediTrainer",
+  "version": "1.0.0",
+  "description": "Play the original at [LostVectors.com](http://www.lostvectors.com/jeditrainer/index.html)",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dekutard/jediTrainer.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Dekutard/jediTrainer/issues"
+  },
+  "homepage": "https://github.com/Dekutard/jediTrainer#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
