@@ -1,5 +1,5 @@
 {
-  "name": "jediTrainer",
+  "name": "jedi-trainer",
   "version": "1.0.0",
   "description": "Play the original at [LostVectors.com](http://www.lostvectors.com/jeditrainer/index.html)",
   "main": "server.js",

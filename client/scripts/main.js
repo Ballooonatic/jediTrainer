@@ -49,6 +49,9 @@ const mouse = app.renderer.plugins.interaction.mouse.global;
 
 let state, saber, drone, crosshair;
 
+let topY = app.screen.height;
+let topX = app.screen.width;
+
 
 
 
@@ -100,16 +103,15 @@ function setup() {
 
     drone.anchor.set(0.5, 0.5);
     drone.scale.set(0.06);
-    drone.x = randomInRange(50, app.renderer.width - 50);    
-    drone.y = randomInRange(50, app.renderer.height - 50);
+    drone.x = randomInRange(50, topX - 50);    
+    drone.y = randomInRange(50, topY - 50);
     drone.vx = 0.01;
     drone.vy = 0.01;
-    drone.accel = 1.1;
-    drone.friction = 0.85;
-    drone.bounce = 0.2;
+    drone.radius = drone.width / 2;
+    drone.bounce = -0.9;
 
-    mouse.x = app.screen.width / 2;
-    mouse.y = app.screen.height / 2;
+    mouse.x = topX / 2;
+    mouse.y = topY / 2;
 
     app.stage.addChild(saber);
     app.stage.addChild(crosshair);
@@ -182,8 +184,38 @@ function updateCrosshairPosition() {
 
 function updateDronePosition() {
 
-    // next
 
+    drone.x += drone.vx;
+    drone.y += drone.vy;
+
+    if (mouse.x > drone.x) { drone.vx += 0.01 }
+    if (mouse.x < drone.x) { drone.vx -= 0.01 }
+    if (mouse.y > drone.y) { drone.vy += 0.01 }
+    if (mouse.y < drone.y) { drone.vy -= 0.01 }
+
+
+    if (drone.x < drone.radius) {
+        drone.vx *= drone.bounce;
+        drone.x = drone.radius;
+        drone.bounce = Math.random() - 1.5
+    }
+    if (drone.x > topX - drone.radius) {
+        drone.vx *= drone.bounce;
+        drone.x = topX - drone.radius;
+        drone.bounce = Math.random() - 1.5
+    }
+    if (drone.y < drone.radius) {
+        drone.vy *= drone.bounce;
+        drone.y = drone.radius;
+        drone.bounce = Math.random() - 1.5
+    }
+    if (drone.y > topY - drone.radius) {
+        drone.vy *= drone.bounce;
+        drone.y = topY - drone.radius;
+        drone.bounce = Math.random() - 1.5
+    }
+
+    
 }
 
 
