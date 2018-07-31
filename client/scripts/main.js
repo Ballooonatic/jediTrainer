@@ -47,7 +47,7 @@ app.renderer.autoResize = true;
 
 const mouse = app.renderer.plugins.interaction.mouse.global;
 
-let state, saber, drone, crosshair;
+let state, saber, saberRotationSpeed, prevRotation, drone, crosshair;
 
 let topY = app.screen.height;
 let topX = app.screen.width;
@@ -132,10 +132,12 @@ function gameLoop(delta) {
 
 function play(delta) {
     saber.position.set(mouse.x, mouse.y);
-    updateSaberRotation();
+    updateSaberRotation(delta);
     updateCrosshairPosition();
-    updateDronePosition();
+    updateDronePosition(saberRotationSpeed);
 }
+
+
 
 
 
@@ -161,12 +163,21 @@ function createSaberTrail(){
 
 
 
-function updateSaberRotation() {
+
+function updateSaberRotation(delta) {
 
     let angleRadians = Math.atan2(mouse.y - crosshair.y, mouse.x - crosshair.x);
     
     saber.rotation = angleRadians + Math.PI / 2;
+
+    if (prevRotation) {
+        let saberRotationSpeed = (saber.rotation - prevRotation) / delta;
+    }
+
+    prevRotation = saber.rotation;
+
 }
+
 
 
 
@@ -182,7 +193,8 @@ function updateCrosshairPosition() {
 
 
 
-function updateDronePosition() {
+
+function updateDronePosition(saberSpeed) {
 
 
     drone.x += drone.vx;
@@ -215,8 +227,21 @@ function updateDronePosition() {
         drone.bounce = Math.random() - 1.5
     }
 
-    
+    if (hitTest(drone, saber)) {
+        console.log("hit!")
+    }
+
 }
+
+
+
+
+function hitTest(spriteOne, spriteTwo) {
+
+
+
+}
+
 
 
 
