@@ -56,6 +56,7 @@ let topX = app.screen.width;
 
 
 
+
 loader
     .add([
         "../sprites/sabers/blueSaber.png",
@@ -69,7 +70,11 @@ loader
 
         "../sprites/sabers/crosshair.png",
 
-        "../sprites/drones/drone.png"
+        "../sprites/drones/drone.png",
+        "../sprites/drones/buum.png",
+
+        "../sprites/drones/laser.png",
+        "../sprites/drones/laserReflected.png",
     ])
     .on("progress", loadProgressHandler)
     .load(setup)
@@ -87,7 +92,7 @@ function loadProgressHandler(loader, resource) {
 
 
 function setup() {
-    console.log("~~~ All files loaded ~~~");
+    console.log("~~~ All files loaded ~~~", "\n\n\n");
     
     state     = play;
     saber     = new Sprite(resources["../sprites/sabers/pinkSaber.png"].texture);
@@ -96,7 +101,7 @@ function setup() {
 
 
     saber.scale.set(0.1);
-    saber.anchor.set(0.525, 0.7);
+    saber.anchor.set(0.5, 0.7);
 
     crosshair.scale.set(0.05);
     crosshair.anchor.set(0.54, 0.54);
@@ -109,7 +114,8 @@ function setup() {
     drone.vy = 0.01;
     drone.radius = drone.width / 2;
     drone.bounce = -0.9;
-
+    drone.hitArea = new PIXI.Circle(drone.x, drone.y, drone.radius);
+    
     mouse.x = topX / 2;
     mouse.y = topY / 2;
 
@@ -132,9 +138,10 @@ function gameLoop(delta) {
 
 function play(delta) {
     saber.position.set(mouse.x, mouse.y);
-    updateSaberRotation(delta);
+    // updateSaberRotation(delta);
     updateCrosshairPosition();
-    updateDronePosition(saberRotationSpeed);
+    // updateDronePosition(saberRotationSpeed);
+    console.log(saberDroneCollision());
 }
 
 
@@ -196,9 +203,16 @@ function updateCrosshairPosition() {
 
 function updateDronePosition(saberSpeed) {
 
+    drone.hitArea.x = drone.x;
+    drone.hitArea.y = drone.y;
 
     drone.x += drone.vx;
     drone.y += drone.vy;
+
+    // angery mode
+    // drone.x += (Math.random() - 0.5) * 10;
+    // drone.y += (Math.random() - 0.5) * 10;
+
 
     if (mouse.x > drone.x) { drone.vx += 0.01 }
     if (mouse.x < drone.x) { drone.vx -= 0.01 }
@@ -227,18 +241,8 @@ function updateDronePosition(saberSpeed) {
         drone.bounce = Math.random() - 1.5
     }
 
-    if (hitTest(drone, saber)) {
-        console.log("hit!")
-    }
 
-}
-
-
-
-
-function hitTest(spriteOne, spriteTwo) {
-
-
+    // check for hits and update velocity according to saber rotation speed
 
 }
 
