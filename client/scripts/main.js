@@ -41,16 +41,21 @@ app.renderer.backgroundColor = 0x2d1d1d;
 app.renderer.view.style.position = "absolute";
 app.renderer.view.style.display = "block";
 app.renderer.autoResize = true;
-// app.renderer.resize(window.innerWidth, window.innerHeight);
 
-// app.renderer.plugins.interaction.cursorStyles.default = "none";
+// makes the mouse invisible
+app.renderer.plugins.interaction.cursorStyles.default = "none";
+
+
 
 const mouse = app.renderer.plugins.interaction.mouse.global;
+
 
 let state, saber, saberRotationSpeed, prevRotation, drone, crosshair;
 
 let topY = app.screen.height;
 let topX = app.screen.width;
+
+let i = 0;
 
 
 
@@ -138,10 +143,9 @@ function gameLoop(delta) {
 
 function play(delta) {
     saber.position.set(mouse.x, mouse.y);
-    // updateSaberRotation(delta);
+    updateSaberRotation(delta);
     updateCrosshairPosition();
-    // updateDronePosition(saberRotationSpeed);
-    console.log(saberDroneCollision());
+    updateDronePosition();
 }
 
 
@@ -178,7 +182,7 @@ function updateSaberRotation(delta) {
     saber.rotation = angleRadians + Math.PI / 2;
 
     if (prevRotation) {
-        let saberRotationSpeed = (saber.rotation - prevRotation) / delta;
+        saberRotationSpeed = (saber.rotation - prevRotation) / delta;
     }
 
     prevRotation = saber.rotation;
@@ -201,7 +205,7 @@ function updateCrosshairPosition() {
 
 
 
-function updateDronePosition(saberSpeed) {
+function updateDronePosition() {
 
     drone.hitArea.x = drone.x;
     drone.hitArea.y = drone.y;
@@ -209,9 +213,6 @@ function updateDronePosition(saberSpeed) {
     drone.x += drone.vx;
     drone.y += drone.vy;
 
-    // angery mode
-    // drone.x += (Math.random() - 0.5) * 10;
-    // drone.y += (Math.random() - 0.5) * 10;
 
 
     if (mouse.x > drone.x) { drone.vx += 0.01 }
@@ -242,7 +243,10 @@ function updateDronePosition(saberSpeed) {
     }
 
 
-    // check for hits and update velocity according to saber rotation speed
+    if (saberDroneCollision()) {
+        console.log("hit!", ++i)
+    }
+    
 
 }
 
